@@ -3,7 +3,6 @@ const mongodb = require('mongodb');
 // const { use } = require('../routes/admin');
 // const Product = require('./product');
 const getDb = require('../util/database').getDb ; 
-
 class User {
   constructor(name , email , cart ,id){
     this.name = name;
@@ -43,24 +42,52 @@ addToCart(product){
       {productId: new mongodb.ObjectId(product._id) , quantity:newQuantity})
   }
 
-  
-
-  console.log(cartProductIndex, "sufffffffffff")
-const updatedCart = {
+  const updatedCart = {
   items: updatedCartItem
 };
 const db = getDb()
 return db.collection('users').updateOne({_id :new mongodb.ObjectId(this._id) }, {$set : {cart : updatedCart}})
 
-
-
-
-// const upcart = {items:[{...product , quantity:1}]}
-// const db=getDb();
-// return db.collection('users').updateOne({_id:new mongodb.ObjectId(this._id)}, {$set: {cart :upcart}})
-
-
 }
+
+getCart() {
+  const db = getDb();
+  const productIds = this.cart.items.map(i => {
+    return i.productId;
+  });
+  return db
+    .collection('products')
+    .find({ _id: { $in: productIds } })
+    .toArray()
+    .then(products => {
+      return products.map(p => {
+        return {
+          ...p,
+          quantity: this.cart.items.find(i => {
+            return i.productId.toString() === p._id.toString();
+          }).quantity
+        };
+      });
+    });
+}
+
+deleteItemFromCart(productId) {
+  const updatedCartItems = this.cart.items.filter(item => {
+    return item.productId.toString() !== productId.toString();
+  });
+  const db = getDb();
+  return db
+    .collection('users')
+    .updateOne(
+      { _id: new mongodb.ObjectId(this._id) },
+      { $set: { cart: {items: updatedCartItems} } }
+    );
+}
+
+
+
+
+
 
 }
 

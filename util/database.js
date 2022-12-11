@@ -1,29 +1,29 @@
-const mongodb =require('mongodb')
-const MongoClient = mongodb.MongoClient;
+// const mongodb =require('mongodb')
+// const MongoClient = mongodb.MongoClient;
 
-let db;
+// let db;
 
-const mongoConnect= (callback) =>{
-  MongoClient.connect('mongodb+srv://Skhan:ameensab@cluster0.hhc4rdx.mongodb.net/shop?retryWrites=true&w=majority')
+// const mongoConnect= (callback) =>{
+//   MongoClient.connect('mongodb+srv://Skhan:ameensab@cluster0.hhc4rdx.mongodb.net/shop?retryWrites=true&w=majority')
 
-.then(res=>{
-  console.log("Connected")
-  db = res.db();
-  callback()
-})
-.catch(err=>{
-  console.log(err)
-  throw err
-})
-};
+// .then(res=>{
+//   console.log("Connected")
+//   db = res.db();
+//   callback()
+// })
+// .catch(err=>{
+//   console.log(err)
+//   throw err
+// })
+// };
 
-const getDb = () =>{
-  if(db){
-    return db;
-  }
-  throw "No database found"
-}
+// const getDb = () =>{
+//   if(db){
+//     return db;
+//   }
+//   throw "No database found"
+// }
 
 
-exports.mongoConnect = mongoConnect;
-exports.getDb=getDb;
+// exports.mongoConnect = mongoConnect;
+// exports.getDb=getDb;

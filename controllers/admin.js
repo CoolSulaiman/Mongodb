@@ -88,6 +88,7 @@ exports.postEditProduct = (req, res, next) => {
 
 exports.getProducts = (req, res, next) => {
   Product.find()
+  // .select('title , price ,-imageUrl')
   .populate('userId','name')
     .then(products => {
       console.log(products)

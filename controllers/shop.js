@@ -1,5 +1,6 @@
 const Product = require('../models/product');
 const user = require('../models/user')
+
 exports.getProducts = (req, res, next) => {
   Product.find()
     .then(products => {

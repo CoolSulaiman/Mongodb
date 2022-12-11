@@ -89,7 +89,7 @@ exports.postEditProduct = (req, res, next) => {
 exports.getProducts = (req, res, next) => {
   Product.find()
   // .select('title , price ,-imageUrl')
-  .populate('userId','name')
+  .populate('userId')
     .then(products => {
       console.log(products)
       res.render('admin/products', {

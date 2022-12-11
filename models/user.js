@@ -16,6 +16,8 @@ const userSchema = new Schema({
         items: [{productId:{type : Schema.Types.ObjectId ,ref:'Products',required:true}
              , quantity :{type:Number,required:true}  }]
     }
+
+
 })
 
 
@@ -55,7 +57,10 @@ userSchema.methods.deleteItemFromCart = function(prodId){
   
 } 
 
-
+userSchema.methods.clearCart = function(){
+  this.cart = { items : [] } ;
+  return this.save();
+}
 
 module.exports = mongoose.model('User' , userSchema)
 
